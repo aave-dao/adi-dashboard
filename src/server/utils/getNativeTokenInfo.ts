@@ -6,7 +6,7 @@ export const getNativeTokenInfo = async (
   nativeTokenSymbol: string,
 ) => {
   const tokenMarketDataOnDateData = await fetch(
-    `https://api.coingecko.com/api/v3/coins/${nativeTokenName}/history?date=${formattedBlockDate}&localization=false&x_cg_demo_api_key=${env.COINGECKO_API_KEY}`,
+    `https://pro-api.coingecko.com/api/v3/coins/${nativeTokenName}/history?date=${formattedBlockDate}&localization=false&x_cg_pro_api_key=${env.COINGECKO_API_KEY}`,
   );
   if (!tokenMarketDataOnDateData.ok) {
     console.log(tokenMarketDataOnDateData);

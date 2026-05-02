@@ -1,0 +1,81 @@
+account_id: ""
+project_slug: ""
+specs:
+  balance-monitor:
+    description: "Redundant CCC native + LINK balance watcher (chains 1/137/43114). Posts to Slack redundancy channel when below threshold."
+    function: src/balanceMonitor:run
+    trigger:
+      type: periodic
+      periodic:
+        interval: 30m
+    execution_type: parallel
+
+  envelope-events:
+    description: "Tracks CCC envelope lifecycle on-chain (Registered / DeliveryAttempted / TransactionForwardingAttempted) into action storage."
+    function: src/eventHandlers:onCccEvent
+    trigger:
+      type: transaction
+      transaction:
+        status:
+          - mined
+        filters:
+          # CCC addresses below come from @aave-dao/aave-address-book
+          # (GovernanceV3{Ethereum,Polygon,Avalanche}.CROSS_CHAIN_CONTROLLER).
+          # The action code reads them from the package at runtime; YAML cannot
+          # import JS, so they are duplicated here. If the address book updates,
+          # bump the version and refresh these literals.
+          - network: 1
+            eventEmitted:
+              contract:
+                address: "0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1"
+              name: EnvelopeRegistered
+          - network: 137
+            eventEmitted:
+              contract:
+                address: "0xF6B99959F0b5e79E1CC7062E12aF632CEb18eF0d"
+              name: EnvelopeRegistered
+          - network: 43114
+            eventEmitted:
+              contract:
+                address: "0x27FC7D54C893dA63C0AE6d57e1B2B13A70690928"
+              name: EnvelopeRegistered
+          - network: 1
+            eventEmitted:
+              contract:
+                address: "0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1"
+              name: EnvelopeDeliveryAttempted
+          - network: 137
+            eventEmitted:
+              contract:
+                address: "0xF6B99959F0b5e79E1CC7062E12aF632CEb18eF0d"
+              name: EnvelopeDeliveryAttempted
+          - network: 43114
+            eventEmitted:
+              contract:
+                address: "0x27FC7D54C893dA63C0AE6d57e1B2B13A70690928"
+              name: EnvelopeDeliveryAttempted
+          - network: 1
+            eventEmitted:
+              contract:
+                address: "0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1"
+              name: TransactionForwardingAttempted
+          - network: 137
+            eventEmitted:
+              contract:
+                address: "0xF6B99959F0b5e79E1CC7062E12aF632CEb18eF0d"
+              name: TransactionForwardingAttempted
+          - network: 43114
+            eventEmitted:
+              contract:
+                address: "0x27FC7D54C893dA63C0AE6d57e1B2B13A70690928"
+              name: TransactionForwardingAttempted
+    execution_type: parallel
+
+  delivery-monitor:
+    description: "Sweeps pending envelopes; alerts Slack and submits on-chain retryEnvelope when stuck >1h."
+    function: src/deliveryMonitor:run
+    trigger:
+      type: periodic
+      periodic:
+        interval: 5m
+    execution_type: sequential

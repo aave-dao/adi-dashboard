@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1777476017004,
+      "tag": "0000_freezing_stone_men",
+      "breakpoints": true
+    }
+  ]
+}

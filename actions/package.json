@@ -1,0 +1,19 @@
+{
+  "name": "adi-monitoring-actions",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tenderly Web3 Actions providing redundant CCC balance + envelope delivery monitoring for the ADI dashboard.",
+  "scripts": {
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aave-dao/aave-address-book": "^4.49.7",
+    "@slack/web-api": "^7.8.0",
+    "@tenderly/actions": "^0.0.10",
+    "ethers": "^6.13.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0"
+  }
+}
