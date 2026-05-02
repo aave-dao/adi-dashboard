@@ -1,0 +1,111 @@
+actions/README.md
+  ba65b0bcdebbd4e9 1-91
+actions/src/rpc.ts
+  ba65b0bcdebbd4e9 1-19
+package.json
+  8b55994bbd0cda2a 10-11,70
+  ba65b0bcdebbd4e9 14
+actions/tsconfig.json
+  ba65b0bcdebbd4e9 1-16
+actions/src/eventHandlers.ts
+  ba65b0bcdebbd4e9 1-139
+.gitignore
+  af684d17bf05b0cd 44-46
+actions/src/abis.ts
+  ba65b0bcdebbd4e9 1-22
+scripts/populate-ccc.ts
+  h_c84ca9b512ee6d 36,40,53-54,57,68-69,72,103,127
+  8b55994bbd0cda2a 1-35,37-39,41-52,55-56,58-67,70-71,73-102,104-126,128-176
+actions/src/constants.ts
+  ba65b0bcdebbd4e9 1-41
+actions/src/storage.ts
+  ba65b0bcdebbd4e9 1-140
+actions/package.json
+  ba65b0bcdebbd4e9 1-19
+drizzle/0000_freezing_stone_men.sql
+  4d743d16386061bb 1-135
+actions/src/cccAddresses.ts
+  ba65b0bcdebbd4e9 1-13
+actions/src/deliveryMonitor.ts
+  ba65b0bcdebbd4e9 1-134
+src/server/utils/getNativeTokenInfo.ts
+  ba65b0bcdebbd4e9 9
+actions/.gitignore
+  h_c84ca9b512ee6d 1
+actions/src/slack.ts
+  ba65b0bcdebbd4e9 1-175
+src/server/utils/getErc20TokenInfo.ts
+  ba65b0bcdebbd4e9 43,57
+actions/src/retry.ts
+  ba65b0bcdebbd4e9 1-66
+actions/tenderly.yaml
+  ba65b0bcdebbd4e9 1-81
+actions/src/balanceMonitor.ts
+  ba65b0bcdebbd4e9 1-92
+tsconfig.json
+  ba65b0bcdebbd4e9 41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "1c1110224555bfe27221cd6acb886f8addf0d55c",
+  "prompts": {
+    "4d743d16386061bb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d5f7b66f-5251-496d-bded-598cff37aa34",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "DhairyaSethi",
+      "messages": [],
+      "total_additions": 135,
+      "total_deletions": 0,
+      "accepted_lines": 135,
+      "overriden_lines": 0
+    },
+    "8b55994bbd0cda2a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bb03fe9e-2f82-4e54-8ebb-1191e965e0fa",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "DhairyaSethi",
+      "messages": [],
+      "total_additions": 307,
+      "total_deletions": 73,
+      "accepted_lines": 230,
+      "overriden_lines": 10
+    },
+    "af684d17bf05b0cd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6a17f2bf-b478-416e-83f9-f59f99fb8f9d",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "DhairyaSethi",
+      "messages": [],
+      "total_additions": 99,
+      "total_deletions": 1,
+      "accepted_lines": 98,
+      "overriden_lines": 3
+    },
+    "ba65b0bcdebbd4e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1bcddac1-078e-4afe-96b6-b108a2c6761c",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "DhairyaSethi",
+      "messages": [],
+      "total_additions": 1546,
+      "total_deletions": 120,
+      "accepted_lines": 1463,
+      "overriden_lines": 0
+    }
+  },
+  "humans": {
+    "h_c84ca9b512ee6d": {
+      "author": "DhairyaSethi"
+    }
+  }
+}
