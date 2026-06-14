@@ -1,0 +1,47 @@
+scripts/populate-ccc.ts
+  s_610fea73560ae5::t_2ffb5f0b309451 78
+  s_610fea73560ae5::t_26fb90ad20fc72 88
+  s_610fea73560ae5::t_314c5e191bdfca 2,4-7,9-17,19-23,46-51,53,56-73,75-77,85-87,95-98,104-294,297-315
+src/server/utils/getNativeTokenInfo.ts
+  s_610fea73560ae5::t_8a412bb0bfe618 14-26
+.gitignore
+  ba65b0bcdebbd4e9 47-49
+package.json
+  ba65b0bcdebbd4e9 11-12
+scripts/self-heal.ts
+  ba65b0bcdebbd4e9 1-287
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "63306e903a524e728dba15a2c026f803b7010087",
+  "prompts": {
+    "ba65b0bcdebbd4e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1bcddac1-078e-4afe-96b6-b108a2c6761c",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "DhairyaSethi",
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 669,
+      "overriden_lines": 0
+    }
+  },
+  "humans": {
+    "h_c84ca9b512ee6d": {
+      "author": "DhairyaSethi"
+    }
+  },
+  "sessions": {
+    "s_610fea73560ae5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5ba82398-bb3e-4500-82e0-1ffb98318838",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    }
+  }
+}
