@@ -11,6 +11,19 @@ const NATIVE_TOKEN_TO_COINGECKO_ID: Record<string, string> = {
   matic: "matic-network",
   avalanche: "avalanche-2",
   avax: "avalanche-2",
+  bnb: "binancecoin",
+  celo: "celo",
+  xdai: "xdai",
+  mantle: "mantle",
+  mnt: "mantle",
+  metis: "metis-token",
+  okb: "okb",
+  // Sonic's gas token "S" is the CoinGecko coin "sonic-3" (the bare "sonic"
+  // slug is an unrelated token), so both the name and ticker must map here.
+  sonic: "sonic-3",
+  s: "sonic-3",
+  plasma: "plasma",
+  xpl: "plasma",
 };
 
 const resolveCoinGeckoId = (nativeTokenName: string): string => {

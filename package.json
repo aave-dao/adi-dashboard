@@ -8,7 +8,8 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "db:populate-ccc": "NODE_ENV=production tsx --env-file=.env scripts/populate-ccc.ts"
+    "db:populate-ccc": "NODE_ENV=production tsx --env-file=.env scripts/populate-ccc.ts",
+    "db:self-heal": "NODE_ENV=production tsx --env-file=.env scripts/self-heal.ts"
   },
   "dependencies": {
     "@aave-dao/aave-address-book": "^4.49.7",
