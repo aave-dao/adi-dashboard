@@ -12,9 +12,15 @@
  * Resumable via scripts/.self-heal-checkpoint.json (gitignored). The checkpoint
  * tracks the last block fully scanned per chain.
  *
+ * The event pass heals chains concurrently (default 4 at a time, --concurrency
+ * to override); each chain's own block walk stays serial so its checkpoint
+ * watermark stays correct.
+ *
  * Examples:
  *   pnpm db:self-heal                       # all chains, both passes, resume
  *   pnpm db:self-heal --chain 1             # only ETH
+ *   pnpm db:self-heal --skip-chains 10,8453 # all chains except OP & Base
+ *   pnpm db:self-heal --concurrency 8       # heal up to 8 chains at once
  *   pnpm db:self-heal --from-block 19000000 # custom start (overrides checkpoint)
  *   pnpm db:self-heal --to-block 19500000   # custom end (default: latest - 8)
  *   pnpm db:self-heal --skip-events         # only re-run cost calculation
@@ -30,10 +36,7 @@ import { fileURLToPath } from "node:url";
 import { and, eq, isNull, or, sql } from "drizzle-orm";
 
 import { db } from "@/server/db";
-import {
-  envelopeRegistered,
-  transactionGasCosts,
-} from "@/server/db/schema";
+import { envelopeRegistered, transactionGasCosts } from "@/server/db/schema";
 import { calculateTxCosts } from "@/server/eventCollection/calculateTxCosts";
 import { getClients } from "@/server/eventCollection/getClients";
 import { getCrossChainControllers } from "@/server/eventCollection/getCrossChainControllers";
@@ -41,12 +44,14 @@ import { getEvents } from "@/server/eventCollection/getEvents";
 
 type Args = {
   chain: number | null;
+  skipChains: number[];
   fromBlock: number | null;
   toBlock: number | null;
   skipEvents: boolean;
   skipCosts: boolean;
   resetCheckpoint: boolean;
   dryRun: boolean;
+  concurrency: number;
 };
 
 const CHECKPOINT_PATH = path.join(
@@ -77,12 +82,22 @@ function parseArgs(): Args {
   }
   return {
     chain: flags.chain ? Number(flags.chain) : null,
+    skipChains:
+      typeof flags["skip-chains"] === "string"
+        ? flags["skip-chains"]
+            .split(",")
+            .map((s) => Number(s.trim()))
+            .filter((n) => Number.isFinite(n))
+        : [],
     fromBlock: flags["from-block"] ? Number(flags["from-block"]) : null,
     toBlock: flags["to-block"] ? Number(flags["to-block"]) : null,
     skipEvents: Boolean(flags["skip-events"]),
     skipCosts: Boolean(flags["skip-costs"]),
     resetCheckpoint: Boolean(flags["reset-checkpoint"]),
     dryRun: Boolean(flags["dry-run"]),
+    concurrency: flags.concurrency
+      ? Math.max(1, Number(flags.concurrency))
+      : 4,
   };
 }
 
@@ -93,7 +108,9 @@ function readCheckpoint(): Checkpoint {
   try {
     return JSON.parse(fs.readFileSync(CHECKPOINT_PATH, "utf8")) as Checkpoint;
   } catch (error) {
-    console.warn(`Could not parse checkpoint, starting fresh: ${String(error)}`);
+    console.warn(
+      `Could not parse checkpoint, starting fresh: ${String(error)}`,
+    );
     return {};
   }
 }
@@ -102,21 +119,37 @@ function writeCheckpoint(cp: Checkpoint) {
   fs.writeFileSync(CHECKPOINT_PATH, JSON.stringify(cp, null, 2));
 }
 
+// Run `worker` over `items` with at most `limit` invocations in flight at once.
+// Workers pull from a shared cursor, so a slow chain doesn't stall the others.
+async function mapWithConcurrency<T>(
+  items: T[],
+  limit: number,
+  worker: (item: T, index: number) => Promise<void>,
+) {
+  let cursor = 0;
+  const runners = Array.from(
+    { length: Math.max(1, Math.min(limit, items.length)) },
+    async () => {
+      while (true) {
+        const index = cursor++;
+        if (index >= items.length) return;
+        await worker(items[index]!, index);
+      }
+    },
+  );
+  await Promise.all(runners);
+}
+
+type Controller = Awaited<ReturnType<typeof getCrossChainControllers>>[number];
+type Client = Awaited<ReturnType<typeof getClients>>[number];
+
 async function healEventsForChain(
-  chainId: number,
+  controller: Controller,
+  client: Client,
   args: Args,
   checkpoint: Checkpoint,
 ) {
-  const controllers = await getCrossChainControllers();
-  const controller = controllers.find((c) => c.chain_id === chainId);
-  if (!controller) {
-    console.warn(`No CCC config for chain ${chainId}, skipping`);
-    return;
-  }
-
-  const clients = await getClients({ crossChainControllers: controllers });
-  const client = clients[chainId];
-  if (!client) throw new Error(`No client for chain ${chainId}`);
+  const chainId = controller.chain_id;
 
   const offset = BLOCK_TIP_OFFSET[chainId] ?? DEFAULT_TIP_OFFSET;
   const tip = Number((await client.getBlockNumber()) - offset);
@@ -136,7 +169,8 @@ async function healEventsForChain(
     return;
   }
 
-  const limit = controller.rpc_block_limit;
+  const tmp_limit_override = 100_000;
+  const limit = tmp_limit_override || controller.rpc_block_limit;
   const totalBatches = Math.ceil((end - start) / limit);
 
   console.log(
@@ -201,7 +235,10 @@ async function healCosts(args: Args) {
     .from(envelopeRegistered)
     .leftJoin(
       transactionGasCosts,
-      eq(transactionGasCosts.transaction_hash, envelopeRegistered.transaction_hash),
+      eq(
+        transactionGasCosts.transaction_hash,
+        envelopeRegistered.transaction_hash,
+      ),
     );
 
   const rows = await (args.chain !== null
@@ -219,7 +256,10 @@ async function healCosts(args: Args) {
   for (const [i, row] of rows.entries()) {
     if (!row.transaction_hash || row.chain_id === null) continue;
     try {
-      await calculateTxCosts(row.transaction_hash as `0x${string}`, row.chain_id);
+      await calculateTxCosts(
+        row.transaction_hash as `0x${string}`,
+        row.chain_id,
+      );
       healed += 1;
     } catch (error) {
       failed += 1;
@@ -252,20 +292,42 @@ async function main() {
   if (!args.skipEvents) {
     const checkpoint = readCheckpoint();
     const controllers = await getCrossChainControllers();
-    const targetChains = args.chain
-      ? controllers.filter((c) => c.chain_id === args.chain)
-      : controllers;
+    const skip = new Set(args.skipChains);
+    const targetChains = (
+      args.chain
+        ? controllers.filter((c) => c.chain_id === args.chain)
+        : controllers
+    ).filter((c) => !skip.has(c.chain_id));
 
-    for (const controller of targetChains) {
+    if (skip.size > 0) {
+      console.log(`Skipping chains: ${[...skip].join(", ")}`);
+    }
+
+    // Build clients once for all chains, then heal chains concurrently. Chains
+    // are independent (own checkpoint key, own RPC endpoint, idempotent writes),
+    // but each chain's batch walk stays serial so its monotonic checkpoint
+    // watermark remains correct on resume.
+    const clients = await getClients({ crossChainControllers: controllers });
+    const concurrency = Math.min(args.concurrency, targetChains.length || 1);
+    console.log(
+      `Healing ${targetChains.length} chain(s), concurrency ${concurrency}`,
+    );
+
+    await mapWithConcurrency(targetChains, concurrency, async (controller) => {
+      const client = clients[controller.chain_id];
+      if (!client) {
+        console.error(`[chain ${controller.chain_id}] No client, skipping`);
+        return;
+      }
       try {
-        await healEventsForChain(controller.chain_id, args, checkpoint);
+        await healEventsForChain(controller, client, args, checkpoint);
       } catch (error) {
         console.error(
           `[chain ${controller.chain_id}] Event heal failed: ` +
             (error instanceof Error ? error.message : String(error)),
         );
       }
-    }
+    });
   } else {
     console.log("Skipping event pass (--skip-events)");
   }

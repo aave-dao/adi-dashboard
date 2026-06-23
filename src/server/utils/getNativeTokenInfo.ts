@@ -24,6 +24,8 @@ const NATIVE_TOKEN_TO_COINGECKO_ID: Record<string, string> = {
   s: "sonic-3",
   plasma: "plasma",
   xpl: "plasma",
+  monad: "monad",
+  mon: "monad",
 };
 
 const resolveCoinGeckoId = (nativeTokenName: string): string => {
