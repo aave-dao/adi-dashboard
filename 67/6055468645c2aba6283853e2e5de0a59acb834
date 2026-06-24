@@ -1,0 +1,27 @@
+src/server/utils/getPayloadProposalRelation.ts
+  s_610fea73560ae5::t_00584a16ea903c 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.11",
+  "base_commit_sha": "676055468645c2aba6283853e2e5de0a59acb834",
+  "prompts": {},
+  "humans": {
+    "h_739c25e72c37fb": {
+      "author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    },
+    "h_c84ca9b512ee6d": {
+      "author": "DhairyaSethi"
+    }
+  },
+  "sessions": {
+    "s_610fea73560ae5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5ba82398-bb3e-4500-82e0-1ffb98318838",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    }
+  }
+}
