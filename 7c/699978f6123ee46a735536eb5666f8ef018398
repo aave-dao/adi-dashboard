@@ -1,0 +1,19 @@
+src/components/ChainIcon.tsx
+  h_739c25e72c37fb 3-4
+pnpm-workspace.yaml
+  h_739c25e72c37fb 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.11",
+  "base_commit_sha": "7c699978f6123ee46a735536eb5666f8ef018398",
+  "prompts": {},
+  "humans": {
+    "h_739c25e72c37fb": {
+      "author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    },
+    "h_c84ca9b512ee6d": {
+      "author": "DhairyaSethi"
+    }
+  }
+}
