@@ -16,3 +16,4 @@ allowBuilds:
 # 4.54.0+), so exempt just that package from the age check.
 minimumReleaseAgeExclude:
   - "@aave-dao/aave-address-book"
+  - "@aave-dao/react-web3-icons"
