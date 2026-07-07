@@ -1,0 +1,27 @@
+src/utils/getChainName.ts
+  s_610fea73560ae5::t_c967ec45aa064b 7-9,15,17-18,20,25,28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4c7c4cd8eccbdc2a07024da8c3c6bff2c7ae171b",
+  "prompts": {},
+  "humans": {
+    "h_739c25e72c37fb": {
+      "author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    },
+    "h_c84ca9b512ee6d": {
+      "author": "DhairyaSethi"
+    }
+  },
+  "sessions": {
+    "s_610fea73560ae5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5ba82398-bb3e-4500-82e0-1ffb98318838",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    }
+  }
+}
