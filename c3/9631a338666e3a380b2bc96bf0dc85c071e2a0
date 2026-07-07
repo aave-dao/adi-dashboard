@@ -1,0 +1,28 @@
+src/components/ExplorerLink.tsx
+  s_610fea73560ae5::t_603435ff061681 10-13
+  s_610fea73560ae5::t_93f5fe9f4a5b42 42-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c39631a338666e3a380b2bc96bf0dc85c071e2a0",
+  "prompts": {},
+  "humans": {
+    "h_739c25e72c37fb": {
+      "author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    },
+    "h_c84ca9b512ee6d": {
+      "author": "DhairyaSethi"
+    }
+  },
+  "sessions": {
+    "s_610fea73560ae5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5ba82398-bb3e-4500-82e0-1ffb98318838",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    }
+  }
+}
