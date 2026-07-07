@@ -1,8 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 const allowedOrigins = [
-  "https://adi.onaave.com",
-  "https://adi-preprod.onaave.com",
+  "https://adi.tools.aave.com",
+  "https://adi-preprod.tools.aave.com",
   "http://localhost:3000",
 ];
 

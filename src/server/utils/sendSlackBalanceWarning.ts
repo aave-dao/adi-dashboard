@@ -55,7 +55,7 @@ export const sendSlackBalanceWarning = async ({
               emoji: true,
             },
             style: "primary",
-            url: `https://adi.onaave.com/status`,
+            url: `https://adi.tools.aave.com/status`,
           },
         ],
       },

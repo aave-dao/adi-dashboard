@@ -24,15 +24,21 @@ export type Thresholds = { native: bigint; link: bigint };
 
 export const NOTIFICATION_THRESHOLDS: Record<SupportedChainId, Thresholds> = {
   1: { native: 80_000_000_000_000_000n, link: 5_000_000_000_000_000_000n },
-  137: { native: 350_000_000_000_000_000_000n, link: 15_000_000_000_000_000_000n },
-  43114: { native: 120_000_000_000_000_000_000n, link: 15_000_000_000_000_000_000n },
+  137: {
+    native: 350_000_000_000_000_000_000n,
+    link: 15_000_000_000_000_000_000n,
+  },
+  43114: {
+    native: 120_000_000_000_000_000_000n,
+    link: 15_000_000_000_000_000_000n,
+  },
 };
 
 export const DELIVERY_NOTIFICATION_TIMEOUT_MS = 60 * 60 * 1000;
 export const AUTO_RETRY_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 export const PENDING_ENVELOPE_TTL_MS = 8 * 24 * 60 * 60 * 1000;
 
-export const DASHBOARD_BASE_URL = "https://adi.onaave.com";
+export const DASHBOARD_BASE_URL = "https://adi.tools.aave.com";
 
 export const TENDERLY_GATEWAY_NETWORK_SLUG: Record<SupportedChainId, string> = {
   1: "mainnet",

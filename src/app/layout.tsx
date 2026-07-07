@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   title: "a.DI - Dashboard",
   metadataBase: new URL(
     env.ENVIRONMENT_STAGE === "PROD"
-      ? "https://adi.onaave.com"
-      : "https://adi-preprod.onaave.com",
+      ? "https://adi.tools.aave.com"
+      : "https://adi-preprod.tools.aave.com",
   ),
   description: "Aave Delivery Insfrastucture Monitoring Dashboard",
   icons: [

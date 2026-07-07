@@ -136,7 +136,7 @@ const MessageValue = ({
   if (type === "payloadId") {
     return (
       <a
-        href={`https://vote.onaave.com/payloads-explorer/?payloadId=${value}&payloadChainId=${chainId}&payloadsControllerAddress=${payloadsControllerAddress}`}
+        href={`https://vote.tools.aave.com/payloads-explorer/?payloadId=${value}&payloadChainId=${chainId}&payloadsControllerAddress=${payloadsControllerAddress}`}
         className="group/payload-link border bg-brand-100 p-3 hover:border-brand-900"
         target="_blank"
       >
@@ -168,7 +168,7 @@ const MessageValue = ({
   if (type === "proposalId") {
     return (
       <a
-        href={`https://vote.onaave.com/proposal/?proposalId=${value}`}
+        href={`https://vote.tools.aave.com/proposal/?proposalId=${value}`}
         className="group/payload-link border bg-brand-100 p-3 hover:border-brand-900"
         target="_blank"
       >
