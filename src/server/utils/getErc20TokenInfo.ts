@@ -40,7 +40,7 @@ export const getErc20TokenInfo = async (
     tokenInfo = knownToken;
   } else {
     const tokenData = await fetch(
-      `https://api.coingecko.com/api/v3/coins/ethereum/contract/${tokenAddress}?x_cg_demo_api_key=${env.COINGECKO_API_KEY}`,
+      `https://pro-api.coingecko.com/api/v3/coins/ethereum/contract/${tokenAddress}?x_cg_pro_api_key=${env.COINGECKO_API_KEY}`,
     );
     if (!tokenData.ok) {
       throw new Error(`Failed to fetch token data for address ${tokenAddress}`);
@@ -54,7 +54,7 @@ export const getErc20TokenInfo = async (
   }
 
   const tokenMarketDataOnDateData = await fetch(
-    `https://api.coingecko.com/api/v3/coins/${tokenInfo.name}/history?date=${formattedBlockDate}&localization=false&x_cg_demo_api_key=${env.COINGECKO_API_KEY}`,
+    `https://pro-api.coingecko.com/api/v3/coins/${tokenInfo.name}/history?date=${formattedBlockDate}&localization=false&x_cg_pro_api_key=${env.COINGECKO_API_KEY}`,
   );
   if (!tokenMarketDataOnDateData.ok) {
     throw new Error(

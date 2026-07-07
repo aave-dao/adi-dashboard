@@ -20,7 +20,7 @@ export const EnvelopeGovernanceLinks = ({
         <div className="flex gap-2">
           {proposalId && (
             <a
-              href={`https://vote.onaave.com/proposal/?proposalId=${proposalId}`}
+              href={`https://vote.tools.aave.com/proposal/?proposalId=${proposalId}`}
               className="group/payload-link border bg-brand-100 p-3 hover:border-brand-900"
               target="_blank"
             >
@@ -51,7 +51,7 @@ export const EnvelopeGovernanceLinks = ({
           )}
           {payloadId && (
             <a
-              href={`https://vote.onaave.com/payloads-explorer/?payloadId=${payloadId}&payloadChainId=${chainId}&payloadsControllerAddress=${payloadsControllerAddress}`}
+              href={`https://vote.tools.aave.com/payloads-explorer/?payloadId=${payloadId}&payloadChainId=${chainId}&payloadsControllerAddress=${payloadsControllerAddress}`}
               className="group/payload-link border bg-brand-100 p-3 hover:border-brand-900"
               target="_blank"
             >

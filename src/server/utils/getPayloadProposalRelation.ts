@@ -1,5 +1,5 @@
 const PROPOSALS_PAYLOADS_URL =
-  "https://raw.githubusercontent.com/bgd-labs/aave-governance-ui-helpers/main/cache/ui/mainnet/proposals_payloads.json";
+  "https://raw.githubusercontent.com/aave-dao/aave-governance-cache/main/cache/ui/mainnet/proposals_payloads.json";
 
 type PayloadItem = {
   id: number;

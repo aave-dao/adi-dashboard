@@ -7,6 +7,10 @@ import { Tooltip } from "@/components/Tooltip";
 import { api } from "@/trpc/server";
 import { cn } from "@/utils/cn";
 
+const EXPLORER_OVERRIDES: Record<number, string> = {
+  143: "https://monadscan.com", // Monad
+};
+
 export const ExplorerLink = async ({
   type,
   value,
@@ -35,8 +39,12 @@ export const ExplorerLink = async ({
 
   let url;
 
-  if ("blockExplorers" in chain && chain.blockExplorers?.default?.url) {
-    const explorerUrl = chain.blockExplorers.default.url;
+  const explorerUrl =
+    EXPLORER_OVERRIDES[chainId] ??
+    ("blockExplorers" in chain
+      ? chain.blockExplorers?.default?.url
+      : undefined);
+  if (explorerUrl) {
     url = `${explorerUrl}/${type}/${value}`;
   }
 

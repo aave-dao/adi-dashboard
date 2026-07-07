@@ -1,0 +1,19 @@
+# pnpm 11 blocks dependency postinstall/build scripts unless explicitly
+# allowed. Enable only the ones we actually rely on:
+#   - esbuild: installs its native binary (used by tsx for the db scripts)
+#   - sharp:   native image pipeline (Next.js image optimization / OG images)
+# The rest are optional native speedups for `ws` (bufferutil, utf-8-validate)
+# and a postinstall donation banner (es5-ext) — all safe to skip.
+allowBuilds:
+  bufferutil: false
+  es5-ext: false
+  esbuild: true
+  sharp: true
+  utf-8-validate: false
+# pnpm blocks dependency versions published more recently than its
+# `minimumReleaseAge` supply-chain cutoff. The Aave address book publishes
+# chain additions we need immediately (e.g. Monad / GovernanceV3Monad in
+# 4.54.0+), so exempt just that package from the age check.
+minimumReleaseAgeExclude:
+  - "@aave-dao/aave-address-book"
+  - "@aave-dao/react-web3-icons"
