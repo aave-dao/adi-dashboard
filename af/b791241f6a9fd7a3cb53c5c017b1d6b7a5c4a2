@@ -1,0 +1,29 @@
+actions/src/constants.ts
+  h_739c25e72c37fb 29,33,41
+src/app/layout.tsx
+  h_739c25e72c37fb 19-20
+src/components/EnvelopeGovernanceLinks.tsx
+  h_739c25e72c37fb 23,54
+src/components/EnvelopeMessage.tsx
+  h_739c25e72c37fb 139,171
+src/server/utils/sendSlackBalanceWarning.ts
+  h_739c25e72c37fb 58
+src/middleware.ts
+  h_739c25e72c37fb 4-5
+src/server/utils/sendSlackDeliveryWarning.ts
+  h_739c25e72c37fb 85-86,103-104
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "afb791241f6a9fd7a3cb53c5c017b1d6b7a5c4a2",
+  "prompts": {},
+  "humans": {
+    "h_739c25e72c37fb": {
+      "author": "DhairyaSethi <55102840+DhairyaSethi@users.noreply.github.com>"
+    },
+    "h_c84ca9b512ee6d": {
+      "author": "DhairyaSethi"
+    }
+  }
+}
